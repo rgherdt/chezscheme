@@ -10,7 +10,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://github.com/cisco/ChezScheme/releases/download/v9.5.2/csv9.5.2.tar.gz chezscheme.tar.gz
+ADD https://github.com/cisco/ChezScheme/releases/download/v9.5.4/csv9.5.4.tar.gz chezscheme.tar.gz
 RUN sha256sum chezscheme.tar.gz && sha256sum -c checksum
 RUN mkdir chezscheme && tar -C chezscheme --strip-components 1 --no-same-owner --no-same-permissions -xf chezscheme.tar.gz
 WORKDIR /build/chezscheme
@@ -25,14 +25,14 @@ RUN make clean && rm -rf build
 RUN ./configure --workarea=build  # Different with/without threads.
 RUN make -C build
 RUN make install
-RUN rm -rf /usr/lib/csv9.5.2/examples
+RUN rm -rf /usr/lib/csv9.5.4/examples
 RUN scheme --version
 
 FROM debian:buster-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libncurses6 \
  && rm -rf /var/lib/apt/lists/*
-COPY --from=build /usr/lib/csv9.5.2/ /usr/lib/csv9.5.2/
+COPY --from=build /usr/lib/csv9.5.4/ /usr/lib/csv9.5.4/
 COPY --from=build /usr/bin/scheme /usr/bin/
 COPY scheme-banner /usr/local/bin/
 RUN ln -s scheme /usr/bin/scheme-script \
