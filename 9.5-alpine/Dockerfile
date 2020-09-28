@@ -32,7 +32,8 @@ RUN scheme --version
 
 FROM alpine:3.8
 RUN apk add --no-cache \
-      libuuid
+      libuuid \
+      ncurses
 COPY --from=build /usr/lib/csv9.5.2/ /usr/lib/csv9.5.2/
 COPY --from=build /usr/bin/scheme /usr/bin/
 COPY scheme-banner /usr/local/bin/
