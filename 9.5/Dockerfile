@@ -29,10 +29,10 @@ RUN rm -rf /usr/lib/csv9.5.2/examples
 RUN scheme --version
 
 FROM debian:buster-slim
-COPY --from=build /usr/lib/csv9.5.2/ /usr/lib/csv9.5.2/
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libncurses6 \
  && rm -rf /var/lib/apt/lists/*
+COPY --from=build /usr/lib/csv9.5.2/ /usr/lib/csv9.5.2/
 COPY --from=build /usr/bin/scheme /usr/bin/
 COPY scheme-banner /usr/local/bin/
 RUN ln -s scheme /usr/bin/scheme-script && \
