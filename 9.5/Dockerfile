@@ -35,6 +35,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 COPY --from=build /usr/lib/csv9.5.2/ /usr/lib/csv9.5.2/
 COPY --from=build /usr/bin/scheme /usr/bin/
 COPY scheme-banner /usr/local/bin/
-RUN ln -s scheme /usr/bin/scheme-script && \
-    ln -s scheme /usr/bin/petite
+RUN ln -s scheme /usr/bin/scheme-script \
+ && ln -s scheme /usr/bin/petite
 CMD ["scheme-banner"]
